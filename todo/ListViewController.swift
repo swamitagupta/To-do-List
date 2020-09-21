@@ -10,10 +10,30 @@ import UIKit
 
 class ListViewController: UITableViewController {
     
-    let itemArray = ["Find Mike", "Buy Bread", "Build App"]
+    var itemArray = ["Find Mike", "Buy Bread", "Build App"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    @IBAction func plusPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add List", message: "", preferredStyle: .alert)
+        
+        let action  = UIAlertAction(title: "Add", style: .default) { (action) in
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+            
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create New List"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     
     //MARK: - TableView Datasource Methods

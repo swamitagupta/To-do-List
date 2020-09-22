@@ -11,9 +11,14 @@ import UIKit
 class ListViewController: UITableViewController {
     
     var itemArray = ["Find Mike", "Buy Bread", "Build App"]
+    
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let items = defaults.array(forKey: "ToDoListArray") as? [String]{
+            itemArray = items
+        }
     }
     @IBAction func plusPressed(_ sender: UIBarButtonItem) {
         
@@ -23,6 +28,7 @@ class ListViewController: UITableViewController {
         
         let action  = UIAlertAction(title: "Add", style: .default) { (action) in
             self.itemArray.append(textField.text!)
+            self.defaults.set(self.itemArray, forKey: "ToDoListArray")
             self.tableView.reloadData()
             
         }
